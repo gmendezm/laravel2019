@@ -6,13 +6,12 @@
         {{$posts->links()}}
         @foreach($posts as $post)
             <div class="card p-3 m-3">
-                <h3>{{$post->title}}<hr></h3>
-                <small>Written on {{ $post->created_at }}</small>
-                <p>{{$post->body}}</p>
+            <h3><a href="posts/{{$post->id}}">{{$post->title}}</a></h3>
+            <small>Written on {{ $post->created_at }}</small>
             </div>
         @endforeach
         {{$posts->links()}}
     @else
-            <p>No posts found.</p>
+        <p>No posts found.</p>
     @endif
 @endsection
