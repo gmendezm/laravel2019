@@ -8,6 +8,7 @@
         <div>
             {{$post->body}}
         </div>
-        <hr>    
+        <hr>
+    <a href="/posts/{{$post->id}}/edit" class="btn btn-primary">Edit</a> 
     </div>
 @endsection
