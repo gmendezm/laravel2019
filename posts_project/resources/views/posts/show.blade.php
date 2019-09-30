@@ -9,6 +9,14 @@
             {{$post->body}}
         </div>
         <hr>
-    <a href="/posts/{{$post->id}}/edit" class="btn btn-primary">Edit</a> 
+
+        {!!Form::open(['action' => ['PostController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+
+        <a href="/posts/{{$post->id}}/edit" class="btn btn-primary m-3">Edit</a> 
+
+        {{Form::hidden('_method', 'DELETE')}}
+        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+
+        {!!Form::close()!!}
     </div>
 @endsection
