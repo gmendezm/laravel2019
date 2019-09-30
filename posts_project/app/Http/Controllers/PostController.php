@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\User;
 
 class PostController extends Controller
 {
@@ -45,6 +46,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user->id;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created');
@@ -110,5 +112,13 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
         return redirect('/posts')->with('success', 'Post Removed');
+    }
+
+    public function by_user($user_id){
+        //$user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $posts = $user->posts;
+        //$posts = Post::orderBy('updated_at', 'desc')->paginate(10);
+        return view('posts.dashboard')->with('posts', $posts);
     }
 }
