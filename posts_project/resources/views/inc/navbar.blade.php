@@ -33,6 +33,8 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                            <a href="/user/{{auth()->user()->id}}" class="dropdown-item">Dashboard</a>
+
                             <a class="dropdown-item" href="/posts/create">Create Post <span class="sr-only">(current)</span></a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
