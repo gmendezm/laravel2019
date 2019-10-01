@@ -49,14 +49,40 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'cover_image' => 'image|nullable|max:1999'
         ]);
+
+        $fileNameToStore = "";
+
+        // Handle File Upload
+        if($request->hasFile('cover_image')){
+
+            // File
+            $file = $request->file('cover_image');
+
+            // Get filename with the extension
+            $fileNameWithExt = $file->getClientOriginalName();
+
+            // Get just filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            // Get just ext
+            $extension = $file->getClientOriginalExtension();
+
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . "." . $extension;
+
+            // Upload image
+            $path = $file->storeAs('public/cover/images', $fileNameToStore);
+        }
 
         // Create Post
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
+        $post->cover_image = $fileNameToStore;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created');
