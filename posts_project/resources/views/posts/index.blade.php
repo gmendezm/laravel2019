@@ -12,9 +12,9 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         @if ($post->cover_image != '')
-                            <img style="width:100%" src="/storage/cover/images/{{$post->cover_image}}" alt="Cover Image">
+                            <img style="width:100%" src="/storage/cover_images/{{$post->cover_image}}" alt="Cover Image">
                         @else
-                            <img style="width:100%" src="/storage/cover/images/no_image_available.jpg" alt="Cover Image">
+                            <img style="width:100%" src="/storage/cover_images/no_image_available.jpg" alt="Cover Image">
                         @endif
                     </div>
                     <div class="col-md-8">

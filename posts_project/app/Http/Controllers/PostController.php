@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -74,7 +75,7 @@ class PostController extends Controller
             $fileNameToStore = $filename . '_' . time() . "." . $extension;
 
             // Upload image
-            $path = $file->storeAs('public/cover/images', $fileNameToStore);
+            $path = $file->storeAs('public/cover_images', $fileNameToStore);
         }
 
         // Create Post
@@ -155,7 +156,7 @@ class PostController extends Controller
             $fileNameToStore = $filename . '_' . time() . "." . $extension;
 
             // Upload image
-            $path = $file->storeAs('public/cover/images', $fileNameToStore);
+            $path = $file->storeAs('public/cover_images', $fileNameToStore);
         }
 
         // Create Post
@@ -183,6 +184,11 @@ class PostController extends Controller
         // Check for correct user
         if(auth()->user()->id !== $post->user_id){
             return redirect('/posts')->with('error', 'Unauthorized Page');
+        }
+
+        if($post->cover_image != ''){
+            // Delete Image
+            Storage::delete('public/cover_images/' . $post->cover_image);
         }
 
         $post->delete();

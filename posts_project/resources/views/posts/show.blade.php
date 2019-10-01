@@ -7,7 +7,7 @@
         <small>Written on {{ $post->created_at }} by <a href="/user/{{$post->user->id}}">{{$post->user->name}}</a></small>
 
         @if ($post->cover_image != '')
-            <img style="width:100%" src="/storage/cover/images/{{$post->cover_image}}" alt="Cover Image">
+            <img style="width:100%" src="/storage/cover_images/{{$post->cover_image}}" alt="Cover Image">
         @endif
 
         <div>
