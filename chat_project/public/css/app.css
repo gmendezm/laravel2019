@@ -10644,3 +10644,9 @@ a.text-dark:focus {
   }
 }
 
+.chat-window {
+  overflow-y: scroll;
+  height: 400px;
+  background-color: white;
+}
+
