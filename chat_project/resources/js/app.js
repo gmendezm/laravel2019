@@ -48,9 +48,22 @@ const app = new Vue({
         .listen('ChatEvent', (e) => {
             this.chat.message.push(e.message);
             this.chat.user.push(e.user);
+        }).listenForWhisper('typing', (e) => {
+            if(e.name != ''){
+                this.typing = "Writting...";
+            }else{
+                this.typing = '';
+            }
         });
     },
-
+    watch: {
+        message(){
+          window.Echo.private('my_chat_channel')
+          .whisper('typing', {
+              name: this.message
+          });
+        }
+     },
     methods:{
        
         send(){

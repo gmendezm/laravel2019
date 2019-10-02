@@ -4,7 +4,7 @@
 
     <div class="w-50 m-3 mx-auto" id="app">
         <div class="list-group-item active">Chat Room</div>
-
+    <div class="badge badge-pill badge-primary">@{{ typing }}</div>
         <ul class="list-group chat-window" v-chat-scroll>
             <message 
                 v-for="value, index in chat.message" 
