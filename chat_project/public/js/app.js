@@ -59285,20 +59285,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       _this.chat.message.push(e.message);
 
       _this.chat.user.push(e.user);
-    }).listenForWhisper('typing', function (e) {
-      if (e.name != '') {
-        _this.typing = "Writting...";
-      } else {
-        _this.typing = '';
-      }
     });
-  },
-  watch: {
-    message: function message() {
-      window.Echo["private"]('my_chat_channel').whisper('typing', {
-        name: this.message
-      });
-    }
   },
   methods: {
     send: function send() {

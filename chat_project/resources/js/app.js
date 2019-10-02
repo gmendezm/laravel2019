@@ -11,6 +11,7 @@ window.Vue = require('vue');
 // Autoscroll for the chat
 import Vue from 'vue'
 import VueChatScroll from 'vue-chat-scroll'
+import Echo from 'laravel-echo';
 Vue.use(VueChatScroll)
 
 /**
@@ -37,16 +38,40 @@ const app = new Vue({
     data: {
         message: '',
         chat:{
-            message: []
-        }
+            message: [],
+            user: []
+        },
+        typing: ''
     },
+    mounted(){
+        window.Echo.private('my_chat_channel')
+        .listen('ChatEvent', (e) => {
+            this.chat.message.push(e.message);
+            this.chat.user.push(e.user);
+        });
+    },
+
     methods:{
+       
         send(){
             if(this.message.length != 0){
                 this.chat.message.push(this.message);
-                this.message = "";
+                this.chat.user.push("Tu");
+
+                axios.post('/send', {
+                    message: this.message
+                })
+                .then(response => {
+                    console.log("Message received in the server.");
+                    this.message = "";
+                })
+                .catch(error => {
+                    console.log(error)
+                });
             }
-            
-        }
-    }
+        },
+
+
+    },
+
 });
