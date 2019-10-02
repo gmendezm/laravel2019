@@ -49,8 +49,6 @@ if (token) {
 
  window.Echo = new Echo({
      broadcaster: 'pusher',
-     //key: process.env.MIX_PUSHER_APP_KEY,
-     // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
      key: 'd1295a63ebca875553be',
      cluster: 'us2',
      encrypted: false

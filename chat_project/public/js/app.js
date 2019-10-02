@@ -1846,7 +1846,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['color'],
+  props: ['color', 'user'],
   computed: {
     className: function className() {
       return 'list-group-item-' + this.color;
@@ -47077,7 +47077,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("small", { staticClass: "badge float-right", class: _vm.badgeClass }, [
-      _vm._v("Tu")
+      _vm._v(_vm._s(_vm.user))
     ])
   ])
 }
@@ -59237,6 +59237,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -59245,6 +59246,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Autoscroll for the chat
+
 
 
 
@@ -59271,14 +59273,48 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: {
     message: '',
     chat: {
-      message: []
+      message: [],
+      user: []
+    },
+    typing: ''
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.Echo["private"]('my_chat_channel').listen('ChatEvent', function (e) {
+      _this.chat.message.push(e.message);
+
+      _this.chat.user.push(e.user);
+    }).listenForWhisper('typing', function (e) {
+      if (e.name != '') {
+        _this.typing = "Writting...";
+      } else {
+        _this.typing = '';
+      }
+    });
+  },
+  watch: {
+    message: function message() {
+      window.Echo["private"]('my_chat_channel').whisper('typing', {
+        name: this.message
+      });
     }
   },
   methods: {
     send: function send() {
+      var _this2 = this;
+
       if (this.message.length != 0) {
         this.chat.message.push(this.message);
-        this.message = "";
+        this.chat.user.push("Tu");
+        axios.post('/send', {
+          message: this.message
+        }).then(function (response) {
+          console.log("Message received in the server.");
+          _this2.message = "";
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     }
   }
@@ -59342,11 +59378,9 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  //key: process.env.MIX_PUSHER_APP_KEY,
-  //cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   key: 'd1295a63ebca875553be',
   cluster: 'us2',
-  encrypted: true
+  encrypted: false
 });
 
 /***/ }),
