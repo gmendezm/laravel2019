@@ -6,7 +6,7 @@ use App\Events\ChatEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class AppListenersChatListener
+class ChatListener
 {
     /**
      * Create the event listener.
