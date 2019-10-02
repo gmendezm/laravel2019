@@ -27,6 +27,7 @@ class ChatEvent implements ShouldBroadcast
     {
         $this->message = $message;
         $this->user = $user->name;
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**
@@ -36,12 +37,14 @@ class ChatEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat-project-channel');
+        return new PrivateChannel('my_chat_channel');
     }
 
-    public function broadcastAs()
+
+    // Not even implement this method if you don't know exactly what you want with it !!
+    /*public function broadcastAs()
     {
-        return 'event-gmendezm';
-    }
+        return 'ChatEvent';
+    }*/
 
 }
