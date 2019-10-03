@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script>
+            var user = {!! json_encode((array)auth()->user()) !!};
+    </script>
 </head>
 <body>
     <div id="app">

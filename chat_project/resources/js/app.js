@@ -33,6 +33,7 @@ Vue.component('message', require('./components/chat/message.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ 
 const app = new Vue({
     el: '#app',
     data: {
@@ -50,7 +51,7 @@ const app = new Vue({
             this.chat.user.push(e.user);
         }).listenForWhisper('typing', (e) => {
             if(e.name != ''){
-                this.typing = "Writting...";
+                this.typing = e.user_writting + " is writting...";
             }else{
                 this.typing = '';
             }
@@ -60,7 +61,8 @@ const app = new Vue({
         message(){
           window.Echo.private('my_chat_channel')
           .whisper('typing', {
-              name: this.message
+              name: this.message,
+              user_writting:  user["\u0000*\u0000attributes"].name
           });
         }
      },
