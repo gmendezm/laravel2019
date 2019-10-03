@@ -30,7 +30,8 @@ return [
 
     'connections' => [
 
-        'pusher' => [
+        /* The data for use in the Pusher server*/
+       /* 'pusher' => [
             'driver' => 'pusher',
             'key' => env('PUSHER_APP_KEY'),
             'secret' => env('PUSHER_APP_SECRET'),
@@ -38,6 +39,21 @@ return [
             'options' => [
                 'cluster' => 'us2',
                 'useTLS' => false
+            ],
+        ],*/
+
+        /* The data for use in our own server */
+        'pusher' => [
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'options' => [
+                'cluster' => 'us2',
+                'useTLS' => false,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'http'
             ],
         ],
 

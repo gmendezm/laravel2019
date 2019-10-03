@@ -47,9 +47,24 @@ if (token) {
 
  window.Pusher = require('pusher-js');
 
+ /* Data for work with pusher */
+ /*
  window.Echo = new Echo({
      broadcaster: 'pusher',
      key: 'd1295a63ebca875553be',
      cluster: 'us2',
      encrypted: false
+ });
+*/
+
+ // Data for work with our own server
+ 
+ window.Echo = new Echo({
+     broadcaster: 'pusher',
+     key: 'd1295a63ebca875553be',
+     cluster: 'us2',
+     encrypted: false,
+     wsHost: window.location.hostname,
+     wsPort: 6001,
+     disableStats: true
  });
