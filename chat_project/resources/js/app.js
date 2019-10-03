@@ -41,7 +41,8 @@ const app = new Vue({
         chat:{
             message: [],
             user: [],
-            color: []
+            color: [],
+            time: []
         },
         typing: ''
     },
@@ -51,6 +52,7 @@ const app = new Vue({
             this.chat.message.push(e.message);
             this.chat.user.push(e.user);
             this.chat.color.push("warning");
+            this.chat.time.push(e.time);
         }).listenForWhisper('typing', (e) => {
             if(e.name != ''){
                 this.typing = e.user_writting + " is writting...";
@@ -72,11 +74,14 @@ const app = new Vue({
        
         send(){
             if(this.message.length != 0){
+                var date = (new Date()).toString();;
                 this.chat.message.push(this.message);
                 this.chat.user.push("Tu");
                 this.chat.color.push("success");
+                this.chat.time.push(date);
                 axios.post('/send', {
-                    message: this.message
+                    message: this.message,
+                    time: date
                 })
                 .then(response => {
                     console.log("Message received in the server.");
@@ -87,7 +92,6 @@ const app = new Vue({
                 });
             }
         },
-
 
     },
 

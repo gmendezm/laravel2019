@@ -17,16 +17,18 @@ class ChatEvent implements ShouldBroadcast
 
     public $message;
     public $user;
+    public $time;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, User $user)
+    public function __construct($message, User $user, $time)
     {
         $this->message = $message;
         $this->user = $user->name;
+        $this->time = $time;
         $this->dontBroadcastToCurrentUser();
     }
 
