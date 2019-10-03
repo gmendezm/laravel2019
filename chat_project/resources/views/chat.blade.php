@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="w-50 m-3 mx-auto" id="app">
-        <div class="list-group-item active">Chat Room</div>
+        <div class="list-group-item active"> <span class="badge badge-pill badge-success">@{{ usersInChat }}</span> Chat Room
+            </div>
     <div class="badge badge-pill badge-primary">@{{ typing }}</div>
         <ul class="list-group chat-window" v-chat-scroll>
             <message 

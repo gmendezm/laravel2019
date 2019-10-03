@@ -44,7 +44,8 @@ const app = new Vue({
             color: [],
             time: []
         },
-        typing: ''
+        typing: '',
+        usersInChat: 0
     },
     mounted(){
         window.Echo.private('my_chat_channel')
@@ -59,6 +60,17 @@ const app = new Vue({
             }else{
                 this.typing = '';
             }
+        });
+
+        window.Echo.join('my_chat_channel')
+        .here((users) => {
+            this.usersInChat = users.length;
+        })
+        .joining((user) => {
+            this.usersInChat += 1;
+        })
+        .leaving((user) => {
+            this.usersInChat -= 1;
         });
     },
     watch: {
