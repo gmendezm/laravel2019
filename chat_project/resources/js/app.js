@@ -14,6 +14,12 @@ import VueChatScroll from 'vue-chat-scroll'
 import Echo from 'laravel-echo';
 Vue.use(VueChatScroll)
 
+import Toaster from 'v-toaster'
+import 'v-toaster/dist/v-toaster.css'
+
+Vue.use(Toaster, {timeout: 5000})
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -68,9 +74,11 @@ const app = new Vue({
         })
         .joining((user) => {
             this.usersInChat += 1;
+            this.$toaster.success(user.name + 'has joined to the chat room.');
         })
         .leaving((user) => {
             this.usersInChat -= 1;
+            this.$toaster.warning(user.name + 'has left the chat room.');
         });
     },
     watch: {
