@@ -74,11 +74,11 @@ const app = new Vue({
         })
         .joining((user) => {
             this.usersInChat += 1;
-            this.$toaster.success(user.name + 'has joined to the chat room.');
+            this.$toaster.success(user.name + ' has joined to the chat room.');
         })
         .leaving((user) => {
             this.usersInChat -= 1;
-            this.$toaster.warning(user.name + 'has left the chat room.');
+            this.$toaster.warning(user.name + ' has left the chat room.');
         });
     },
     watch: {
