@@ -40,7 +40,8 @@ const app = new Vue({
         message: '',
         chat:{
             message: [],
-            user: []
+            user: [],
+            color: []
         },
         typing: ''
     },
@@ -49,6 +50,7 @@ const app = new Vue({
         .listen('ChatEvent', (e) => {
             this.chat.message.push(e.message);
             this.chat.user.push(e.user);
+            this.chat.color.push("warning");
         }).listenForWhisper('typing', (e) => {
             if(e.name != ''){
                 this.typing = e.user_writting + " is writting...";
@@ -72,7 +74,7 @@ const app = new Vue({
             if(this.message.length != 0){
                 this.chat.message.push(this.message);
                 this.chat.user.push("Tu");
-
+                this.chat.color.push("success");
                 axios.post('/send', {
                     message: this.message
                 })
